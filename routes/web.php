@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\FRecipeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
@@ -15,13 +18,14 @@ use App\Http\Middleware\TokenVerifyMiddleware;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// frontend page routes
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/recipes', [FRecipeController::class, 'index'])->name('recipe');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Page Route
-Route::get('/userLogin', [UserController::class, 'userLoginPage']);
+// auth page routes
+Route::get('/login', [UserController::class, 'userLoginPage'])->name('login');
+Route::get('/register', [UserController::class, 'userRegistrationPage'])->name('register');
 
 // Authentication Route
 Route::post('/user-register', [UserController::class, 'userRegistrationAction']);

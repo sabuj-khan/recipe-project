@@ -11,8 +11,13 @@ use Illuminate\Support\Facades\File;
 class UserController extends Controller
 {
 
-    function userLoginPage(){
-        return view('pages.login-page');
+    function userLoginPage()
+    {
+        return view('pages.auth.login-page');
+    }
+    function userRegistrationPage()
+    {
+        return view('pages.auth.register-page');
     }
 
 
