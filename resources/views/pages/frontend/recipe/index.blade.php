@@ -5,6 +5,10 @@
 @section('content')
 
     @include('components.frontend.breadcrumb')
-    {{-- @include('components.frontend.recipe.recipes') --}}
-    @include('components.frontend.recipe.recent-recipes')
+    <div class="container">
+        <div class="row pt-5">
+            @include('components.frontend.recipe.recent-recipes')
+            @include('components.frontend.right-sidebar')
+        </div>
+    </div>
 @endsection

@@ -4,7 +4,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card h-100 shadow rounded-0 border-0">
-                    <img src="{{ asset('assets/images/feature1.jpg') }}" class="card-img-top" alt="...">
+                    <img src="{{ asset('assets/frontend/images/feature1.jpg') }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Waffles</h5>
                         <p class="card-text">Receita bacana pra comer com os amigos de manhã.</p>
@@ -16,7 +16,7 @@
             </div>
             <div class="col">
                 <div class="card h-100 shadow rounded-0 border-0">
-                    <img src="{{ asset('assets/images/feature2.jpg') }}" class="card-img-top" alt="...">
+                    <img src="{{ asset('assets/frontend/images/feature2.jpg') }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Panquecas</h5>
                         <p class="card-text">Receita bacana pra comer com os amigos de manhã.</p>
@@ -28,7 +28,7 @@
             </div>
             <div class="col">
                 <div class="card h-100 shadow rounded-0 border-0">
-                    <img src="{{ asset('assets/images/feature3.jpg') }}" class="card-img-top" alt="...">
+                    <img src="{{ asset('assets/frontend/images/feature3.jpg') }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Chocolate quente</h5>
                         <p class="card-text">Receita bacana pra comer com os amigos de manhã.</p>

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use App\Helper\JWTToken;
+use App\Helper\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -15,11 +17,18 @@ class UserController extends Controller
     {
         return view('pages.auth.login-page');
     }
-    function userRegistrationPage()
+    function forgetPasswordPage()
     {
-        return view('pages.auth.register-page');
+        return view('pages.auth.forget-password-page');
     }
-
+    function resetPasswordPage()
+    {
+        return view('pages.auth.reset-password-page');
+    }
+    function account()
+    {
+        return view('pages.frontend.account.index');
+    }
 
     function userRegistrationAction(Request $request){
         try{
@@ -28,35 +37,28 @@ class UserController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
 
-            $profile_picture = $request->file('profile_picture');
-            $time = time();
-            $file_name = $profile_picture->getClientOriginalName();
-            $image_name = "{$userName}-{$time}-{$file_name}";
-            $image_url = "uploads/{$image_name}";
+            // $profile_picture = $request->file('profile_picture');
+            // $time = time();
+            // $file_name = $profile_picture->getClientOriginalName();
+            // $image_name = "{$userName}-{$time}-{$file_name}";
+            // $image_url = "uploads/{$image_name}";
 
             // File Upload
-            $profile_picture->move(public_path('uploads'), $image_name);
+            // $profile_picture->move(public_path('uploads'), $image_name);
 
             // User Registration 
             User::create([
                 'fullName'=>$fullName,
                 'userName'=>$userName,
                 'email'=>$email,
-                'password'=>$password,
-                'profile_picture'=>$image_url
+                'password'=>Hash::make($password),
+                // 'profile_picture'=>$image_url
             ]);
 
-            return response()->json([
-                'status'=>'success',
-                'message'=>'You have been registered successfully'
-            ],201);
-
+            return ResponseHelper::Out('success', 'Registration Complete!', 200);
         }
         catch(Exception $e){
-            return response()->json([
-                'status'=>'fail',
-                'message'=>'Request failed to register'
-            ]);
+            return ResponseHelper::Out('fail', 'Request Fail!', 200);
         }
     }
 
