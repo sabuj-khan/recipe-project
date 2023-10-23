@@ -64,8 +64,11 @@
         </div>
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                DataTable Example
+                
+                    <i class="fas fa-table me-1"></i>
+                    DataTable Example
+                    <button data-bs-toggle="modal" data-bs-target="#create-modal" class="float-end btn m-0 btn-primary p-2 bg-gradient-primary">Add New User</button>
+                
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -77,6 +80,7 @@
                             <th>Age</th>
                             <th>Start date</th>
                             <th>Salary</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -87,16 +91,21 @@
                             <th>Age</th>
                             <th>Start date</th>
                             <th>Salary</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr>
+                         <tr>
                             <td>Tiger Nixon</td>
                             <td>System Architect</td>
                             <td>Edinburgh</td>
                             <td>61</td>
                             <td>2011/04/25</td>
                             <td>$320,800</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Garrett Winters</td>
@@ -105,6 +114,10 @@
                             <td>63</td>
                             <td>2011/07/25</td>
                             <td>$170,750</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Ashton Cox</td>
@@ -113,7 +126,13 @@
                             <td>66</td>
                             <td>2009/01/12</td>
                             <td>$86,000</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
+
+                       
                         <tr>
                             <td>Cedric Kelly</td>
                             <td>Senior Javascript Developer</td>
@@ -121,6 +140,10 @@
                             <td>22</td>
                             <td>2012/03/29</td>
                             <td>$433,060</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Airi Satou</td>
@@ -129,6 +152,10 @@
                             <td>33</td>
                             <td>2008/11/28</td>
                             <td>$162,700</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Brielle Williamson</td>
@@ -137,6 +164,10 @@
                             <td>61</td>
                             <td>2012/12/02</td>
                             <td>$372,000</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Herrod Chandler</td>
@@ -145,6 +176,10 @@
                             <td>59</td>
                             <td>2012/08/06</td>
                             <td>$137,500</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Rhona Davidson</td>
@@ -153,6 +188,10 @@
                             <td>55</td>
                             <td>2010/10/14</td>
                             <td>$327,900</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Colleen Hurst</td>
@@ -161,6 +200,10 @@
                             <td>39</td>
                             <td>2009/09/15</td>
                             <td>$205,500</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Sonya Frost</td>
@@ -169,6 +212,10 @@
                             <td>23</td>
                             <td>2008/12/13</td>
                             <td>$103,600</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Jena Gaines</td>
@@ -177,6 +224,10 @@
                             <td>30</td>
                             <td>2008/12/19</td>
                             <td>$90,560</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
                         <tr>
                             <td>Quinn Flynn</td>
@@ -185,7 +236,13 @@
                             <td>22</td>
                             <td>2013/03/03</td>
                             <td>$342,000</td>
+                            <td>
+                                <button  data-bs-toggle="modal" data-bs-target="#update-modal"  class="btn editBtn btn-sm btn-primary">Edit</button> 
+                                <button data-bs-toggle="modal" data-bs-target="#delete-modal" class="btn deleteBtn btn-sm btn-danger">Delete</button>
+                            </td>
                         </tr>
+
+                         {{-- 
                         <tr>
                             <td>Charde Marshall</td>
                             <td>Regional Director</td>
@@ -537,15 +594,15 @@
                             <td>29</td>
                             <td>2011/06/27</td>
                             <td>$183,000</td>
-                        </tr>
-                        <tr>
+                        </tr> --}}
+                        {{-- <tr>
                             <td>Donna Snider</td>
                             <td>Customer Support</td>
                             <td>New York</td>
                             <td>27</td>
                             <td>2011/01/25</td>
                             <td>$112,000</td>
-                        </tr>
+                        </tr> --}}
                     </tbody>
                 </table>
             </div>
