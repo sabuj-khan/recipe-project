@@ -27,11 +27,11 @@ return new class extends Migration
 
             $table->foreign('recipe_type_id')->references('id')->on('recipe_types')
             ->cascadeOnUpdate()
-            ->restrictOnDelete();
+            ->cascadeOnDelete();
             
             $table->foreign('user_id')->references('id')->on('users')
             ->cascadeOnUpdate()
-            ->restrictOnDelete();
+            ->cascadeOnDelete();
             
             $table->timestamps();
         });

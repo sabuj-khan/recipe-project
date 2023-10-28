@@ -14,7 +14,7 @@ class RecipeController extends Controller
     function create(Request $request)
     {
         try {
-            $user_id = $request->input('user_id');
+            $user_id = $request->header('id');
             $recipe_name = $request->input('recipe_name');
             $recipe_type_id = $request->input('recipe_type_id');
             $ingredients = $request->input('ingredients');
@@ -57,7 +57,7 @@ class RecipeController extends Controller
         try {
             $recipe = Recipe::recipe($id);
             // return $recipe;
-            $user_id = $request->input('user_id');
+            $user_id = $request->header('id');
             $recipe_name = $request->input('recipe_name');
             $recipe_type_id = $request->input('recipe_type_id');
             $ingredients = $request->input('ingredients');

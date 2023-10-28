@@ -4,7 +4,7 @@
         color: #fff;
     }
 </style>
-<header>
+<header id="header">
     <div id="seperator"></div>
     <nav class="navbar navbar-expand-lg">
         <div class="container">

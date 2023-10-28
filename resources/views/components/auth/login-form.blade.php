@@ -4,7 +4,6 @@
     html,
     body {
         position: relative;
-        min-height: 100vh;
         background-color: #e3c973;
         display: flex;
         align-items: center;
@@ -275,7 +274,7 @@
 
     .avater-image {
         background-color: #fff;
-        padding: 1rem 0;
+        padding: 1rem 0 0 0;
         border-radius: 20px;
     }
 
@@ -293,77 +292,69 @@
 </style>
 
 <div class="form-structor">
-    <div class="signup">
+    <div class="signup slide-up">
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <div class="avater-image row" id="avater-image">
             <div class="col-md-12">
-                <div class="row justify-content-center mb-2">
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user1.png') }}" onclick="selectImage('profileImg1')"
+                <div class="row px-2 mb-2 justify-content-center">
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user1.png') }}" onclick="selectImage('profileImg1')"
                             id="profileImg1" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user2.png') }}" onclick="selectImage('profileImg2')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user4.png') }}" onclick="selectImage('profileImg2')"
                             id="profileImg2" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user3.png') }}" onclick="selectImage('profileImg3')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user5.png') }}" onclick="selectImage('profileImg3')"
                             id="profileImg3" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user4.png') }}" onclick="selectImage('profileImg4')"
+                    
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user6.png') }}" onclick="selectImage('profileImg4')"
                             id="profileImg4" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user5.png') }}" onclick="selectImage('profileImg5')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user7.png') }}" onclick="selectImage('profileImg5')"
                             id="profileImg5" style="width: 35px; height: 35px;" alt="">
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user6.png') }}" onclick="selectImage('profileImg6')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user8.png') }}" onclick="selectImage('profileImg6')"
                             id="profileImg6" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user7.png') }}" onclick="selectImage('profileImg7')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user11.png') }}" onclick="selectImage('profileImg7')"
                             id="profileImg7" style="width: 35px; height: 35px;" alt="">
                     </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user8.png') }}" onclick="selectImage('profileImg8')"
+                    <div class="col-2 mb-2 mx-1">
+                        <img src="{{ url('assets/frontend/images/user10.png') }}" onclick="selectImage('profileImg8')"
                             id="profileImg8" style="width: 35px; height: 35px;" alt="">
-                    </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user11.png') }}" onclick="selectImage('profileImg9')"
-                            id="profileImg9" style="width: 35px; height: 35px;" alt="">
-                    </div>
-                    <div class="col-md-2">
-                        <img src="{{ asset('assets/frontend/images/user10.png') }}" onclick="selectImage('profileImg10')"
-                            id="profileImg10" style="width: 35px; height: 35px;" alt="">
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-holder">
-            <input type="name" class="input" placeholder="Full Name" />
-            <input type="text" class="input" placeholder="Username" />
-            <input type="email" class="input" placeholder="Email" />
-            <input type="password" class="input" placeholder="Password" />
+            <input type="name" id="fullName" class="input" placeholder="Full Name" />
+            <input type="text" id="userName" class="input" placeholder="Username" />
+            <input type="email" id="email" class="input" placeholder="Email" />
+            <input type="password" id="password" class="input" placeholder="Password" />
+            <input type="hidden" id="profile_picture">
         </div>
-        <button class="submit-btn">Sign up</button>
+        <button onclick="signUp()" class="submit-btn">Sign up</button>
         
         <div class="text-center cursor-pointer"><small><a href="{{ route('home') }}">back to home</a></small></div>
     </div>
-    <div class="login slide-up">
+    <div class="login">
         <div class="center">
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
             <div class="form-holder">
-                <input type="email" class="input" placeholder="Email" />
-                <input type="password" class="input" placeholder="Password" />
+                <input type="email" id="emailLogin" class="input" placeholder="Email" />
+                <input type="password" id="passwordLogin" class="input" placeholder="Password" />
             </div>
             <div class=" text-end">
                 <small><a href="{{ route('forget.password') }}">forget password</a></small>
             </div>
-            <button class="submit-btn">Log in</button>
+            <button onclick="login()" class="submit-btn">Log in</button>
             <div class="text-center cursor-pointer"><small><a href="{{ route('home') }}">back to home</a></small></div>
         </div>
     </div>
@@ -376,6 +367,12 @@
     const loginBtn = document.getElementById('login');
     const signupBtn = document.getElementById('signup');
     const avaterImage = document.getElementById('avater-image');
+
+    function hideAvater()
+    {
+        avaterImage.classList.add("d-none")
+    }
+    hideAvater()
 
     loginBtn.addEventListener('click', (e) => {
         let parent = e.target.parentNode.parentNode;
@@ -408,11 +405,7 @@
         let profileImg6 = 'profileImg6';
         let profileImg7 = 'profileImg7';
         let profileImg8 = 'profileImg8';
-        let profileImg9 = 'profileImg9';
-        let profileImg10 = 'profileImg10';
-        // if(profileImg === profileImg1 || profileImg === profileImg2 || profileImg === profileImg3 || profileImg === profileImg4)
-        // {
-        // alert(profileImg)
+        
         $("#" + profileImg1).removeClass("avater-borer-color");
         $("#" + profileImg2).removeClass("avater-borer-color");
         $("#" + profileImg3).removeClass("avater-borer-color");
@@ -421,9 +414,77 @@
         $("#" + profileImg6).removeClass("avater-borer-color");
         $("#" + profileImg7).removeClass("avater-borer-color");
         $("#" + profileImg8).removeClass("avater-borer-color");
-        $("#" + profileImg9).removeClass("avater-borer-color");
-        $("#" + profileImg10).removeClass("avater-borer-color");
         $("#" + profileImg).toggleClass("avater-borer-color");
-        // }
+        
+        let profile_picture = $("#profile_picture");
+        var firstImageSource = $('#'+profileImg).attr('src');
+        profile_picture.val(firstImageSource);
+        // profile_picture
+    }
+
+    async function signUp()
+    {
+        let signup = document.querySelector('.signup'),
+        login = document.querySelector('.login');
+        let fullName = document.getElementById("fullName").value,
+        userName = document.getElementById("userName").value,
+        email = document.getElementById("email").value,
+        password = document.getElementById("password").value,
+        profile_picture = document.getElementById("profile_picture").value;
+        if (fullName.length === 0) {
+            requiredNotification("FullName Required!");
+        }else if (userName.length === 0) {
+            requiredNotification("Username Required!");
+        }else if (email.length === 0) {
+            requiredNotification("Email Required!");
+        }else if (password.length === 0) {
+            requiredNotification("Password Required!");
+        }else if (profile_picture.length === 0) {
+            requiredNotification("Please Select a Avater!");
+        }else {
+            let response = await axios.post("/register-request", {
+                fullName: fullName,
+                userName: userName,
+                email: email,
+                password: password,
+                profile_picture: profile_picture
+            });
+            if (response.data.status === "uniqueEmail") {
+                requiredNotification(response.data.msg)
+            }else if(response.data.status === "success") {
+                successNotification(response.data.msg)
+                signup.classList.add('slide-up')
+                avaterImage.classList.add("d-none")
+                login.classList.remove('slide-up')
+            }else {
+                errorNotification("Request Fails!")
+            }
+        }
+    }
+
+    const login = async () => {
+        let email = document.getElementById("emailLogin").value,
+        password = document.getElementById("passwordLogin").value;
+        if (email.length === 0) {
+            requiredNotification("Email Required!");
+        }else if(password.length === 0) {
+            requiredNotification("Password Required!");
+        }else{
+            let response = await axios.post("/login-request", {
+                email: email,
+                password: password
+            });
+            if (response.data.status === "notFound") {
+                requiredNotification(response.data.msg)
+            }else if(response.data.status === "success") {
+                if (response.data.userType === "author") {
+                    window.location.href = "/";
+                }else{
+                    window.location.href = "/admin/dashboard";
+                }
+            }else{
+                errorNotification(response.data.msg)
+            }
+        }
     }
 </script>

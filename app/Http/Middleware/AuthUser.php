@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TokenVerifyMiddleware
+class AuthUser
 {
     /**
      * Handle an incoming request.
@@ -19,11 +19,9 @@ class TokenVerifyMiddleware
         $token = $request->cookie('token');
         $result = JWTToken::verifyToken($token);
 
-        if ($result == 'unauthorized') {
-            return redirect()->route('login');
-        } else {
-            $request->headers->set('email', $result->userEmail);
-            $request->headers->set('id', $result->userId);
+        if($result != 'unauthorized'){
+            return redirect()->route('admin.dashboard');
+        }else{
             return $next($request);
         }
     }

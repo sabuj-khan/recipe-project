@@ -50,4 +50,9 @@ class Recipe extends Model
     {
         return Recipe::findOrFail(intval($id));
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');   
+    }
 }

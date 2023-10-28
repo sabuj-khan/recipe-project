@@ -3,27 +3,25 @@
 namespace App\Http\Middleware;
 
 use App\Helper\JWTToken;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TokenVerifyMiddleware
+class UserType
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         $token = $request->cookie('token');
-        $result = JWTToken::verifyToken($token);
-
-        if ($result == 'unauthorized') {
-            return redirect()->route('login');
-        } else {
-            $request->headers->set('email', $result->userEmail);
-            $request->headers->set('id', $result->userId);
+        $userCheck = JWTToken::verifyToken($token);
+        if ($userCheck->userType == 'author') {
+            return redirect()->route('home');
+        }else{
             return $next($request);
         }
     }

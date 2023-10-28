@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fullName', 255)->nullable();
             $table->string('userName', 255);
             $table->string('email', 255)->unique();
+            $table->enum('userType', ['admin', 'author'])->default('author');
             $table->string('password', 255)->nullable();
             $table->string('profile_picture', 255)->nullable();
 

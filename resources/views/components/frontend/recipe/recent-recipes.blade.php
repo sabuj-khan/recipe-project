@@ -1,4 +1,8 @@
 <style>
+    .pagination
+    {
+        padding: 0 5rem 0 0;
+    }
     .pagination .page-item.active>.page-link,
     .page-link.active {
         background-color: #FFCA2C;
@@ -26,118 +30,104 @@
         border-top-right-radius: 50px;
         border-bottom-right-radius: 50px;
     }
-
 </style>
 <section class="recent-recipe col-md-9">
     {{-- <h2 class="text-center pb-4">Receitas recentes</h2> --}}
     <div class="row justify-content-center">
-        <div class="col-md-11">
-            <div class="card mb-3 borderleftRadius borderRightRadius">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ asset('assets/frontend/images/recent-recipe1.jpg') }}" style="height: 100%; width: 100%;"
-                            class="img-fluid borderleftRadius borderRightRadius" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <span class="h5 card-title">Donut</span><br>
-                            <span class=" text-secondary fs-6 fw-normal">author name | 17 may, 2023 | commets(3)</span>
-                            <div id="rateYo" class="mt-2"></div>
-                            <p class="card-text pt-2">Donuts caseiros irresistíveis com massa macia e coberturas
-                                deliciosas.
-                            </p>
-                            <div class="my-3">
-                                <a href="#"
-                                    class="btn btn-warning btn-sm border-0 me-4 text-light rounded-5 px-3 py-2">More
-                                    Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="recipe">
+
         </div>
-        <div class="col-md-11">
-            <div class="card mb-3 borderleftRadius borderRightRadius">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ asset('assets/frontend/images/recent-recipe2.jpg') }}" style="height: 100%; width: 100%;"
-                            class="img-fluid borderleftRadius borderRightRadius" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <span class="h5 card-title">Cereal</span><br>
-                            <span class=" text-secondary fs-6 fw-normal">author name | 17 may, 2023 | commets(3)</span>
-                            <div id="rateYo" class="mt-2"></div>
-                            <p class="card-text">Donuts caseiros irresistíveis com massa macia e coberturas deliciosas.
-                            </p>
-                            <div class="my-3">
-                                <a href="#"
-                                    class="btn btn-warning btn-sm border-0 me-4 text-light rounded-5 px-3 py-2">More
-                                    Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-11 d-flex justify-content-between pagination pt-3 pb-5">
+            <div id="PreviousItem" class="page-item">
+                <button type="button" class="page-link px-5 py-2 Previous">Previous</button>
             </div>
-        </div>
-        <div class="col-md-11">
-            <div class="card mb-3 borderleftRadius borderRightRadius">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ asset('assets/frontend/images/recent-recipe3.jpg') }}" style="height: 100%; width: 100%;"
-                            class="img-fluid borderleftRadius borderRightRadius" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <span class="h5 card-title">Cookies</span><br>
-                            <span class=" text-secondary fs-6 fw-normal">author name | 17 may, 2023 | commets(3)</span>
-                            <div id="rateYo" class="mt-2"></div>
-                            <p class="card-text">Cookies caseiros irresistíveis com massa macia e pedaços generosos de
-                                chocolate.</p>
-                            <div class="my-3">
-                                <a href="#"
-                                    class="btn btn-warning btn-sm border-0 me-4 text-light rounded-5 px-3 py-2">More
-                                    Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+            <div id="NextItem" class="page-item">
+                <button type="button" data-url="" class="page-link px-5 py-2 nextPage" href="#">Next</button>
             </div>
-        </div>
-        <div class="col-md-11 d-flex justify-content-between">
-            <div class=" text-muted pt-2">
-                per page 5 page 1 total page 10
-            </div>
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
 </section>
 
 <script>
-    $(function() {
+    async function getRecipe(url) {
+        let recipe = $("#recipe");
+        recipe.empty()
+        loaderShow();
+        let response = await axios.get(url);
+        loaderHide();
+        console.log(response.data);
+        response.data.data.forEach((item, index) => {
+            let objectDate = new Date(item.created_at);
+            let day = objectDate.getDate();
+            let month = objectDate.toLocaleString('en-US', {
+                month: 'short'
+            });
+            let year = objectDate.getFullYear();
 
-        $("#rateYo").rateYo({
-            spacing: "5px",
-            starWidth: "15px",
-            readOnly: true,
-            rating: 3.2,
-            // onChange: function(rating, rateYoInstance) {
-            //     $(this).next().text(rating);
-            // },
+            let row = `<div class="col-md-11">
+            <div class="card mb-3 borderleftRadius borderRightRadius">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ url('${item.image}') }}" style="height: 100%; width: 100%;"
+                            class="img-fluid borderleftRadius borderRightRadius" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body ps-5">
+                            <span class="h5 card-title">${item.recipe_name}</span><br>
+                            <span class=" text-secondary fs-6 fw-normal">${item.author.userName} | ${day} ${month}, ${year} | commets(3)</span>
+                            <div id="rateYo${item.id}" class="mt-2"></div>
+                            <p class="card-text pt-2">${item.cooking_instructions}</p>
+                            <div class="my-3">
+                                <a href="#"
+                                    class="btn btn-warning btn-sm border-0 me-4 text-light rounded-5 px-3 py-2">More
+                                    Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+            recipe.append(row);
+            $(function() {
+
+                $("#rateYo" + item.id).rateYo({
+                    spacing: "5px",
+                    starWidth: "15px",
+                    readOnly: true,
+                    rating: 3.2,
+                });
+            });
         });
+        let nextPage = $(".nextPage");
+        let Previous = $(".Previous");
+        // nextPage.attr("data-url", response.data.next_page_url)
+        if (response.data.next_page_url === null) {
+            $("#NextItem").addClass("disabled");
+        }else
+        {
+            $("#NextItem").removeClass("disabled");
+            nextPage.attr("data-url", response.data.next_page_url)
+        }
+        
+        if (response.data.prev_page_url === null) {
+            $("#PreviousItem").addClass("disabled");
+        }else
+        {
+            $("#PreviousItem").removeClass("disabled");
+            Previous.attr("data-url", response.data.prev_page_url)
+        }
+    }
+    let url = "/get-recipe";
+    getRecipe(url);
 
+    $(document).ready(function(){
+        $(".nextPage").on("click", async function(){
+            let url = $(this).data("url");
+            await getRecipe(url);
+        });
+        $(".Previous").on("click", async function(){
+            let url = $(this).data("url");
+            await getRecipe(url);
+        });
     });
 </script>
