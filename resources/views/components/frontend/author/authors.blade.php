@@ -77,57 +77,10 @@
     }
 </style>
 <div class="container py-5">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-lg-5 col-md-6">
-                        <img src="{{ asset('assets/frontend/images/author.jpg') }}" class="img-fluid author_img"
-                            style="width: 100%; height: 40vh;" alt="...">
-                    </div>
-                    <div class="col-lg-7 col-md-6 d-flex align-items-center ps-3">
-                        <div class="card-body text-md-start text-center">
-                            <h5 class="card-title">Author Name</h5>
-                            <p class="card-text"><small class="text-body-secondary">Recipes (10)</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-lg-5 col-md-6">
-                        <img src="{{ asset('assets/frontend/images/author.jpg') }}" class="img-fluid author_img"
-                            style="width: 100%; height: 40vh;" alt="...">
-                    </div>
-                    <div class="col-lg-7 col-md-6 d-flex align-items-center ps-3">
-                        <div class="card-body text-md-start text-center">
-                            <h5 class="card-title">Author Name</h5>
-                            <p class="card-text"><small class="text-body-secondary">Recipes (10)</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-lg-5 col-md-6">
-                        <img src="{{ asset('assets/frontend/images/author.jpg') }}" class="img-fluid author_img"
-                            style="width: 100%; height: 40vh;" alt="...">
-                    </div>
-                    <div class="col-lg-7 col-md-6 d-flex align-items-center ps-3">
-                        <div class="card-body text-md-start text-center">
-                            <h5 class="card-title">Author Name</h5>
-                            <p class="card-text"><small class="text-body-secondary">Recipes (10)</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row" id="authorList">
 
-        <div class="col-md-12 d-flex justify-content-between">
+
+        {{-- <div class="col-md-12 d-flex justify-content-between">
             <div class=" text-muted pt-2">
                 per page 5 show 1
             </div>
@@ -146,6 +99,34 @@
                     </li>
                 </ul>
             </nav>
-        </div>
+        </div> --}}
     </div>
 </div>
+
+<script>
+    async function getAuthor() {
+        let authorList = $("#authorList");
+        let resopnse = await axios.get("/get-author");
+        console.log(resopnse);
+        resopnse.data.forEach((author, index) => {
+            let row = `<div class="col-md-6">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-lg-5 col-md-6">
+                        <img src="${author.profile_picture}" class="img-fluid author_img"
+                            style="width: 100%; height: 40vh;" alt="...">
+                    </div>
+                    <div class="col-lg-7 col-md-6 d-flex align-items-center ps-3">
+                        <div class="card-body text-md-start text-center">
+                            <h5 class="card-title">${author.fullName}</h5>
+                            <p class="card-text"><small class="text-body-secondary"><a href="/recipes?author=${author.id}">Recipes</a> (${author.recipe.length})</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+            authorList.append(row);
+        });
+    }
+    getAuthor()
+</script>

@@ -19,6 +19,10 @@ return new class extends Migration
             $table->enum('userType', ['admin', 'author'])->default('author');
             $table->string('password', 255)->nullable();
             $table->string('profile_picture', 255)->nullable();
+            $table->string('phone', 255)->nullable();
+            $table->string('city', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('facebook_page', 255)->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

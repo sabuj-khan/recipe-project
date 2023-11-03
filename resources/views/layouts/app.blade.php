@@ -16,6 +16,7 @@
         <!-- Option 1: Include in HTML -->
         {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"> --}}
         <link rel="stylesheet" href="{{ asset('assets/frontend/css/jquery.rateyo.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/backend/css/jquery.dataTables.min.css') }}">
         <!-- Google Font -->
         <link
             href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
@@ -91,7 +92,7 @@
 
     {{-- footer start --}}
 
-    @if (!Route::is('login') && !Route::is('forget.password') && !Route::is('reset.password') && !request()->is('admin*'))
+    @if (!Route::is('login') && !Route::is('forget.password') && !Route::is('reset.password') && !request()->is('admin*') && !Route::is('recipe'))
         {{-- <div class="footerContent"> --}}
         @include('layouts.partials.frontend.footer')
         {{-- </div> --}}
@@ -101,6 +102,7 @@
 @if (!request()->is('admin*'))
     <script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/jquery.rateyo.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/jquery.dataTables.min.js') }}"></script>
 @else
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>

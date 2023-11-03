@@ -6,7 +6,7 @@
 
     @include('components.frontend.breadcrumb')
     <div class="container">
-        <div class="row pt-5">
+        <div class="row py-5">
             @include('components.frontend.recipe.recent-recipes')
             @include('components.frontend.right-sidebar')
         </div>

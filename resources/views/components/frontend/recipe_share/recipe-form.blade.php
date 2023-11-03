@@ -77,14 +77,14 @@
                     <div class=" col-md-6 mt-3">
                         <label for="prep_time" class="mb-sm-0 mb-1 d-sm-flex align-items-center text-muted"
                             style="width: 200px;">Preparation Time</label>
-                        <input type="time" id="prep_time" class=" form-control  focus-ring"
+                        <input type="text" id="prep_time" class=" form-control  focus-ring"
                             style="--bs-focus-ring-color: rgba(var(--bs-warning-rgb), .25)">
                     </div>
                     <div class=" col-md-6 mt-3">
                         <label for="cooking_time" class="mb-sm-0 mb-1 d-sm-flex align-items-center text-muted"
                             style="width: 200px;">Cooking
                             Time</label>
-                        <input type="time" id="cooking_time" class=" form-control  focus-ring"
+                        <input type="text" id="cooking_time" class=" form-control  focus-ring"
                             style="--bs-focus-ring-color: rgba(var(--bs-warning-rgb), .25)">
                     </div>
                 </div>
@@ -129,20 +129,23 @@
                 <textarea type="text" id="ingredients" class="form-control focus-ring"
                     style="--bs-focus-ring-color: rgba(var(--bs-warning-rgb), .25)" placeholder="Ingredients..."></textarea>
             </div>
-            <div class="col-md-4 pt-3">
+            <div class="col-md-6 pt-3">
                 <div class=" d-sm-flex mt-3">
                     <label for="difficulty_level" class="mb-sm-0 mb-1 d-sm-flex align-items-center text-muted"
                         style="width: 200px;">Difficulty Level</label>
                     <input type="text" id="difficulty_level" class=" form-control  focus-ring"
                         style="--bs-focus-ring-color: rgba(var(--bs-warning-rgb), .25)">
                 </div>
-            </div>
-            <div class="col-md-8 pt-3">
                 <div class=" d-sm-flex mt-sm-3 mt-0">
                     <label for="dietary_preferences" class="mb-sm-0 mb-1 d-sm-flex align-items-center text-muted"
                         style="width: 200px;">Dietary Preferences</label>
                     <input type="text" id="dietary_preferences" class=" form-control  focus-ring"
                         style="--bs-focus-ring-color: rgba(var(--bs-warning-rgb), .25)">
+                </div>
+            </div>
+            <div class="col-md-6 pt-3">
+                <div class=" d-sm-flex mt-sm-3 mt-0">
+                    <textarea id="short_des" class=" form-control" rows="4" placeholder="Short deescription..."></textarea>
                 </div>
             </div>
             <div class="col-md-12 text-end pt-3">
@@ -154,7 +157,13 @@
 
 <script>
     tinymce.init({
-        selector: 'textarea',
+        selector: '#cooking_instructions',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        height: 400,
+    });
+    tinymce.init({
+        selector: '#ingredients',
         plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         height: 400,
@@ -174,11 +183,12 @@
 
     async function getRecipeType() {
         let recipeType = $("#recipe_type_id");
-        let resopnse = await axios.get("/admin/recipe-type-get");
+        let resopnse = await axios.get("/get-recipe-type");
         resopnse.data.forEach((item, index) => {
             let row = `<option value="${item.id}">${item.name}</option>`;
             recipeType.append(row);
         });
+        console.log(resopnse);
     }
     getRecipeType();
 
@@ -196,7 +206,8 @@
             editorIngredients = tinymce.get("ingredients"),
             ingredients = editorIngredients.getContent(),
             difficulty_level = document.getElementById("difficulty_level").value,
-            dietary_preferences = document.getElementById("dietary_preferences").value;
+            dietary_preferences = document.getElementById("dietary_preferences").value,
+            short_des = document.getElementById("short_des").value;
 
         if (recipe_name.length === 0) {
             requiredNotification("Recipe Name Required!");
@@ -218,6 +229,8 @@
             requiredNotification("Difficulty Level Required!");
         } else if (dietary_preferences.length === 0) {
             requiredNotification("Dietary Preferences Required!");
+        } else if (short_des.length === 0) {
+            requiredNotification("Short Description Required!");
         } else {
             let formData = new FormData();
             formData.append("recipe_name", recipe_name);
@@ -230,6 +243,7 @@
             formData.append("ingredients", ingredients);
             formData.append("difficulty_level", difficulty_level);
             formData.append("dietary_preferences", dietary_preferences);
+            formData.append("short_des", short_des);
             let response = await axios.post("/recipe-create", formData);
             if (response.data.status === "success") {
                 successNotification(response.data.msg);

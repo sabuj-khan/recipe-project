@@ -1,5 +1,5 @@
 <style>
-    .dropdown .dropdown-menu .dropdown-item.active{
+    .nav-item .dropdown .dropdown-menu .dropdown-item.active {
         background-color: #FFDB63;
         color: #fff;
     }
@@ -24,27 +24,42 @@
                         <a class="nav-link fw-bold  {{ Route::is('recipe.share') ? 'active' : '' }}"
                             href="{{ route('recipe.share') }}">Recipe Share</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link {{ Route::is('recipe') ? 'active' : '' }} fw-bold" href="{{ route('recipe') }}">Recipes</a>
-                        {{-- <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item border border-top-0 border-bottom-1 {{ Route::is('recipe') ? 'active' : '' }}" href="">All</a></li>
-                            <li><hr></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul> --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('recipe') ? 'active' : '' }} fw-bold"
+                            href="{{ route('recipe') }}">Recipes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-bold  {{ Route::is('author') ? 'active' : '' }}"
                             href="{{ route('author') }}">Authors</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link fw-bold  {{ Route::is('about') ? 'active' : '' }}"
-                            href="{{ route('about') }}">About us</a>
-                    </li> --}}
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold  {{ Route::is('account') ? 'active' : '' }}"
-                            href="{{ route('account') }}">Account</a>
-                    </li>
+                    @if ($user)
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <button class=" bg-transparent border-0 my-1" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <img src="{{ $user->profile_picture }}"
+                                        class=" border border-1 border-warning rounded-circle"
+                                        style="width: 30px; height: 30px;" alt="">
+                                </button>
+                                <ul class="dropdown-menu  dropdown-menu-end">
+                                    <li><a class="dropdown-item {{ Route::is('account') ? 'active' : '' }}"
+                                            href="{{ route('account') }}">Account</a></li>
+                                    <li><a href="{{ route('author.recipes') }}"
+                                            class="dropdown-item {{ Route::is('author.recipes') ? 'active' : '' }}">My
+                                            Recipes</a></li>
+                                    <li><button type="button"
+                                            class="dropdown-item border border-bottom-0 border-end-0 border-start-0 border-top-1"
+                                            onclick="logout()">Logout</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    @else
+                        <li class="nav-item ps-3">
+                            <a class="nav-link fw-bold border border-1 rounded " href="{{ route('login') }}"><i
+                                    class="fa-solid fa-user"></i> Login / Join</a>
+                        </li>
+                    @endif
                 </ul>
                 <div class=" position-relative">
                     <div class="d-flex" style="">
@@ -70,3 +85,10 @@
         </div>
     </nav>
 </header>
+
+<script>
+    async function logout() {
+        await axios.get('/logout');
+        window.location.href = '/login';
+    }
+</script>

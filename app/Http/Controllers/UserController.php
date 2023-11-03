@@ -25,9 +25,11 @@ class UserController extends Controller
     {
         return view('pages.auth.reset-password-page');
     }
-    function account()
+    function account(Request $request)
     {
-        return view('pages.frontend.account.index');
+        $user_id = $request->header('id');
+        $user = User::where('id', $user_id)->first();
+        return view('pages.frontend.account.index', compact('user'));
     }
 
     function userRegistration(Request $request)
@@ -81,7 +83,7 @@ class UserController extends Controller
 
     function userLogout()
     {
-        return redirect('/userLogin')->cookie('token', '', -1);
+        return redirect('/login')->cookie('token', '', -1);
     }
 
 

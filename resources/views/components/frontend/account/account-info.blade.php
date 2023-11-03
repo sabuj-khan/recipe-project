@@ -149,10 +149,13 @@
         <div class="row align-items-center flex-row-reverse">
             <div class="col-lg-6">
                 <div class="about-text go-to">
+                    @if (Session::has('success'))
+                        <div class="alert alert-success"><span class="border border-1 border-dark px-1 rounded-circle me-1">&check;</span> {{ Session::get('success') }}</div>
+                    @endif
                     <div class=" d-flex">
                         <h3 class="dark-color">Profile</h3>
                         <div class=" position-relative">
-                            <button type="button"
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#edit"
                                 class=" btn bg-transparent position-absolute left-0 bottom-0 fs-4 text-muted btn-sm btn-sm"
                                 style="--bs-focus-ring-color: rgba(var(--bs-success-rgb), 0)">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -164,49 +167,59 @@
                         <div class="col-md-6">
                             <div class="media">
                                 <label>Username</label>
-                                <p>anwar58</p>
+                                <p>{{ $user->userName }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>Full Name</label>
-                                <p>MD Anwar Sayeed</p>
+                                <p>{{ $user->fullName }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>E-mail</label>
-                                <p>info@domain.com</p>
+                                <p>{{ $user->email }}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>Phone</label>
-                                <p>820-885-3321</p>
+                                @if ($user->phone)
+                                    <p>{{ $user->phone }}</p>
+                                @else
+                                    <p>---</p>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>City</label>
-                                <p>Canada</p>
+                                @if ($user->city)
+                                    <p>{{ $user->city }}</p>
+                                @else
+                                    <p>---</p>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>Address</label>
-                                <p>California, USA</p>
+                                @if ($user->address)
+                                    <p>{{ $user->address }}</p>
+                                @else
+                                    <p>---</p>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media">
                                 <label>Fb Page</label>
-                                <p>skype.0404</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="media">
-                                <label>Freelance</label>
-                                <p>Available</p>
+                                @if ($user->facebook_page)
+                                    <a href="{{ $user->facebook_page }}" target="_blank">Click</a>
+                                @else
+                                    <p>---</p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -214,42 +227,58 @@
             </div>
             <div class="col-lg-6">
                 <div class="about-avatar text-md-start text-center pb-4">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" title="" alt="">
+                    <img src="{{ $user->profile_picture }}" style="width: 50%;" class="rounded-circle" title=""
+                        alt="">
                     <input type="file" id="profileImg" class="d-none">
                 </div>
             </div>
         </div>
         <div class="counter">
+            {{-- @if ($user->id)
+                
+            @else
+                
+            @endif --}}
             <div class="row">
-                <div class="col-6 col-lg-3">
+                <div class="col-6 col-lg-4">
                     <div class="count-data text-center">
-                        <h6 class="count h2" data-to="500" data-speed="500">500</h6>
+                        <h6 class="count h2" data-to="500" data-speed="500">{{ $user->followers->count() }}</h6>
                         <p class="m-0px font-w-600">Followers</p>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3">
+                <div class="col-6 col-lg-4">
                     <div class="count-data text-center">
-                        <h6 class="count h2" data-to="150" data-speed="150">150</h6>
+                        <h6 class="count h2" data-to="150" data-speed="150">{{ $user->recipe->count() }}</h6>
                         <p class="m-0px font-w-600">Total Recipes</p>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3">
+                <div class="col-6 col-lg-4">
                     <div class="count-data text-center">
-                        <h6 class="count h2" data-to="850" data-speed="850">850</h6>
+                        <h6 class="count h2" data-to="850" data-speed="850">0</h6>
                         <p class="m-0px font-w-600">Viewers</p>
                     </div>
                 </div>
-                <div class="col-6 col-lg-3 d-flex justify-content-center align-items-center">
+                {{-- <div class="col-6 col-lg-3 d-flex justify-content-center align-items-center">
                     <div class="count-data">
                         <button type="button" class=" btn btn-primary px-5 py-2 fs-6 fw-semibold">Follow</button>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
 </section>
-  
+
 <script>
+    let loader = true;
+    loaderShow()
+    if (loader === true) {
+        setTimeout(() => {
+            loaderHide()
+            loader = false;
+            return;
+        }, 1000);
+    }
+
     $(".about-avatar img").on("click", function() {
         let profileImg = $("#profileImg");
         profileImg.click();

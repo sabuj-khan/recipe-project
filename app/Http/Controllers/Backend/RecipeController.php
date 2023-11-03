@@ -24,6 +24,7 @@ class RecipeController extends Controller
             $difficulty_level = $request->input('difficulty_level');
             $cuisine_type = $request->input('cuisine_type');
             $dietary_preferences = $request->input('dietary_preferences');
+            $short_des = $request->input('short_des');
             $image_url = Recipe::image($request->file('image'), $user_id, "");
             // return $image_url;
             // Create recipe
@@ -38,6 +39,7 @@ class RecipeController extends Controller
                 'difficulty_level' => $difficulty_level,
                 'cuisine_type' => $cuisine_type,
                 'dietary_preferences' => $dietary_preferences,
+                'short_des' => $short_des,
                 'image' => $image_url,
             ]);
 
@@ -67,22 +69,40 @@ class RecipeController extends Controller
             $difficulty_level = $request->input('difficulty_level');
             $cuisine_type = $request->input('cuisine_type');
             $dietary_preferences = $request->input('dietary_preferences');
+            $short_des = $request->input('short_des');
             $image_url = Recipe::image($request->file('image'), $user_id, $recipe->image);
-
-            // Recipe Update
-            $recipe->update([
-                'user_id' => $user_id,
-                'recipe_name' => $recipe_name,
-                'recipe_type_id' => $recipe_type_id,
-                'ingredients' => $ingredients,
-                'cooking_instructions' => $cooking_instructions,
-                'prep_time' => $prep_time,
-                'cooking_time' => $cooking_time,
-                'difficulty_level' => $difficulty_level,
-                'cuisine_type' => $cuisine_type,
-                'dietary_preferences' => $dietary_preferences,
-                'image' => $image_url,
-            ]);
+            // return $image_url;
+            if ($image_url) {
+                // Recipe Update
+                $recipe->update([
+                    'user_id' => $user_id,
+                    'recipe_name' => $recipe_name,
+                    'recipe_type_id' => $recipe_type_id,
+                    'ingredients' => $ingredients,
+                    'cooking_instructions' => $cooking_instructions,
+                    'prep_time' => $prep_time,
+                    'cooking_time' => $cooking_time,
+                    'difficulty_level' => $difficulty_level,
+                    'cuisine_type' => $cuisine_type,
+                    'dietary_preferences' => $dietary_preferences,
+                    'short_des' => $short_des,
+                    'image' => $image_url,
+                ]);
+            } else {
+                $recipe->update([
+                    'user_id' => $user_id,
+                    'recipe_name' => $recipe_name,
+                    'recipe_type_id' => $recipe_type_id,
+                    'ingredients' => $ingredients,
+                    'cooking_instructions' => $cooking_instructions,
+                    'prep_time' => $prep_time,
+                    'cooking_time' => $cooking_time,
+                    'difficulty_level' => $difficulty_level,
+                    'cuisine_type' => $cuisine_type,
+                    'dietary_preferences' => $dietary_preferences,
+                    'short_des' => $short_des,
+                ]);
+            }
 
             return ResponseHelper::Out('success', 'Recipe updated!', 200);
         } catch (Exception $e) {
@@ -92,20 +112,16 @@ class RecipeController extends Controller
 
     function destroy($id)
     {
-        try {
-            $recipe = Recipe::recipe($id);
+        $recipe = Recipe::recipe($id);
 
-            $file_path = public_path() . "/" . $recipe->image;
+        $file_path = public_path() . "/" . $recipe->image;
 
-            if (File::exists($file_path)) {
-                File::delete($file_path);
-            }
-            $recipe->delete();
-
-            return ResponseHelper::Out('success', 'Recipe Deleted!', 200);
-        } catch (Exception $e) {
-            return ResponseHelper::Out('fail', 'Request Fail!', 200);
+        if (File::exists($file_path)) {
+            File::delete($file_path);
         }
+        $recipe->delete();
+
+        return ResponseHelper::Out('success', 'Recipe Deleted!', 200);
     }
 
 

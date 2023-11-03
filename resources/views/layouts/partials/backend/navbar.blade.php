@@ -25,7 +25,7 @@
                 </li>
                 <li>
                     <button type="button" class="dropdown-item"
-                        onclick="axios.get('/logout');window.location.href='/login';">
+                        onclick="logout()">
                         Logout
                     </button>
                 </li>
@@ -33,3 +33,11 @@
         </li>
     </ul>
 </nav>
+
+<script>
+    async function logout()
+    {
+        await axios.get('/logout');
+        window.location.href='/login';
+    }
+</script>

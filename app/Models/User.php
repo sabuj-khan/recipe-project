@@ -9,10 +9,15 @@ class User extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['fullName', 'userName', 'email', 'password', 'profile_picture'];
+    protected $fillable = ['fullName', 'userName', 'email', 'password', 'profile_picture', 'phone', 'city', 'address', 'facebook_page'];
 
 
-    public function recipe(){
-        return $this->hasMany(Recipe::class);
+    public function recipe()
+    {
+        return $this->hasMany(Recipe::class, 'user_id');
+    }
+    public function followers()
+    {
+        return $this->hasMany(Follower::class, 'author_id');
     }
 }

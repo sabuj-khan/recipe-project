@@ -10,6 +10,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\RecipeController;
 use App\Http\Controllers\Backend\RecipeTypeController;
 use App\Http\Controllers\Frontend\AuthorController;
+use App\Http\Controllers\Frontend\CommentController;
+use App\Http\Controllers\Frontend\RatingController;
 use App\Http\Controllers\Frontend\RecipeShareController;
 use App\Http\Middleware\TokenVerifyMiddleware;
 
@@ -23,21 +25,48 @@ use App\Http\Middleware\TokenVerifyMiddleware;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// frontend page routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/recipe-share', [RecipeShareController::class, 'index'])->name('recipe.share')->middleware('tokenVerify');
-Route::get('/recipes', [FRecipeController::class, 'index'])->name('recipe')->middleware('tokenVerify');
-Route::get('/authors', [AuthorController::class, 'index'])->name('author');
-// frontend api routes
-Route::get('/get-recipe-in-home', [HomeController::class, 'getRecipe']);
-Route::get('/get-recipe', [FRecipeController::class, 'getRecipe']);
+Route::middleware('authorCheck')->group(function () {
+
+    // frontend page routes
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+    Route::get('/recipe-share', [RecipeShareController::class, 'index'])->name('recipe.share')->middleware('tokenVerify');
+    Route::get('/recipes', [FRecipeController::class, 'index'])->name('recipe');
+    Route::get('/recipes-by-id/{id}', [FRecipeController::class, 'show'])->name('recipe.by.id');
+    Route::get('/authors', [AuthorController::class, 'index'])->name('author');
+    Route::get('/author-recipes', [AuthorController::class, 'authorRecipes'])->name('author.recipes')->middleware('tokenVerify');
+    Route::get('/account', [UserController::class, 'account'])->name('account');
+
+    // frontend recipe api routes
+    Route::get('/get-recipe-in-home', [HomeController::class, 'getRecipe']);
+    Route::get('/get-recipe', [FRecipeController::class, 'getRecipe']);
+    Route::get('/get-recipe-type', [FRecipeController::class, 'getRecipeType']);
+    Route::get('/check-follow', [FRecipeController::class, 'checkFollower']);
+    Route::post('/follow-author', [FRecipeController::class, 'followAuthor']);
+
+
+    // comment api routes
+    Route::post('/comment', [CommentController::class, 'comment'])->name('comment');
+    Route::get('/comment-get/{recipe_id}', [CommentController::class, 'get'])->name('comment.get');
+    Route::get('/get-reply-by-comment-id/{p_id}', [CommentController::class, 'getReplyByCommentId']);
+    Route::post('/comment-reply', [CommentController::class, 'commentReply']);
+
+    // author api routes
+    Route::get('/get-author', [AuthorController::class, 'getAuthor']);
+    Route::post('/profile-update', [AuthorController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('/author-recipes-get', [AuthorController::class, 'authorRecipesGet'])->name('author.recipes.get')->middleware('tokenVerify');
+    Route::get('/author-recipe-edit/{id}', [AuthorController::class, 'authorRecipeEdit'])->middleware('tokenVerify');
+    Route::get('/author-recipe-update/{id}', [AuthorController::class, 'authorRecipeUpdate'])->middleware('tokenVerify');
+});
+
+// reting api routes
+Route::post('/rating-request', [RatingController::class, 'ratingRequest']);
+Route::get('/rating-get/{recipe_id}', [RatingController::class, 'ratingGet']);
 
 // auth page routes
 Route::get('/login', [UserController::class, 'userLoginPage'])->name('login')->middleware('auth');
 Route::get('/forget-password', [UserController::class, 'forgetPasswordPage'])->name('forget.password');
 Route::get('/reset-password', [UserController::class, 'resetPasswordPage'])->name('reset.password');
-Route::get('/account', [UserController::class, 'account'])->name('account');
 
 // Authentication Route
 Route::post('/register-request', [UserController::class, 'userRegistration']);
@@ -50,7 +79,7 @@ Route::get('/logout', [UserController::class, 'userLogout'])->middleware('tokenV
 
 
 
-Route::middleware('tokenVerify')->group(function(){
+Route::middleware('tokenVerify')->group(function () {
     // Recipe Routes
     Route::post('/recipe-create', [RecipeController::class, 'create']);
     Route::get('/recipe-edit/{id}', [RecipeController::class, 'edit']);
